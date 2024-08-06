@@ -1,0 +1,24 @@
+﻿@page "/products"
+
+@inject IDbContextFactory<crudd.Data.MyAppDbContext> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Menu</h1>
+
+<p>
+    <a href="products/create"><MudButton Color="Color.Warning" Variant="Variant.Filled">Create New</MudButton></a>
+</p>
+
+<QuickGrid Items="DbFactory.CreateDbContext().Product" Class="w-100 ">
+    <Microsoft.AspNetCore.Components.QuickGrid.PropertyColumn Property="product => product.Id"  />
+    <Microsoft.AspNetCore.Components.QuickGrid.PropertyColumn Property="product => product.Name" />
+    <Microsoft.AspNetCore.Components.QuickGrid.PropertyColumn Property="product => product.Price" />
+    <Microsoft.AspNetCore.Components.QuickGrid.PropertyColumn Property="product => product.Qtd" />
+
+    <Microsoft.AspNetCore.Components.QuickGrid.TemplateColumn Context="product">
+        <MudButton href="@($"products/edit?id={product.Id}")" Color="Color.Dark">Edit</MudButton>
+        <MudButton href="@($"products/details?id={product.Id}")" Color="Color.Success">Details</MudButton>
+        <MudButton href="@($"products/delete?id={product.Id}")" Color="Color.Secondary">Delete</MudButton>
+    </Microsoft.AspNetCore.Components.QuickGrid.TemplateColumn>
+</QuickGrid>
